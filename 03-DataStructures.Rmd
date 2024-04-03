@@ -1,0 +1,14 @@
+# Building Derived Elements [SQL]
+
+The derived elements are build in SQL using a series of case statements. 
+
+```
+anyAABlack = 
+  CASE WHEN 
+	          (ETHNIC_CODE in ('1') --PRIMARY
+	            OR SUBSTRING(RACE_ETHNICITY,15,1) LIKE '%Y%') THEN 1 
+       ELSE 0
+		   END
+```
+
+Each statement checks both the MIS/IPEDS `ETHNIC_CODE` and the 21-code `RACE_ETHNICITY` for the given criteria. The full coding can be found here: [SQL Coding - ETHNICITY TABLE]

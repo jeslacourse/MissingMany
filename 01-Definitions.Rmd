@@ -1,0 +1,52 @@
+# Definitions 
+
+## CCC Apply 
+Race and Ethnicity data is primarily sourced from the CCC Application. The latest copy of the CCCApply Data Dictionaries can be found at this link:
+
+[https://cccnext.jira.com/wiki/spaces/PD/pages/67043586/Data+Dictionaries](https://cccnext.jira.com/wiki/spaces/PD/pages/67043586/Data+Dictionaries)
+
+We recommend downloading a local copy of the *CCCApply Standard & Noncredit Application Data Dictionary* and *CCCApply International Application Data Dictionary*. Data elements are very similar between the two, yet our naming conventions will be based on the *Standard and Noncredit Application*. 
+
+### Data Elements
+
+Two questions make up the Race/Ethnicity portion of the CCC Application: 
+
+- Are you **Hispanic/Latino**? 
+
+- **Race Groups**: Check all ethnicity, nation and ancestry groups that you identify with. When you select a major ethnicity group, you will have the option to select more specific ancestry groups.
+
+
+## MIS Student Data Elements
+Application data is coded for MIS reporting. See all *Student Data Elements (SB)* here:
+
+[https://webdata.cccco.edu/ded/sb/sb.htm](https://webdata.cccco.edu/ded/sb/sb.htm)
+
+
+MIS reporting is based on [SB29](https://webdata.cccco.edu/ded/sb/sb29.pdf). 
+
+These 21 codes are rolled up into nine codes for MIS reporting: 
+
+- Hispanic/Latino
+- African American/Black
+- American Indian/ Alaska Native
+- Asian
+- Filipino 
+- Pacific Islander
+- White
+- Multiracial
+- Unknown/Not Disclosed
+
+Students who indicate any Hispanic/Latinx ancestry are coded Hispanic/Latino. Any non-Hispanic students indicating multiple ancestries are coded as Multiracial. There is one exception: Filipino students who also indicate another Asian ancestry are coded as Asian. 
+
+### Expanded Definitions
+
+Expanded definitions, including expanding AI/AN tribal and cultural affiliations, can be found using [SB38](https://webdata.cccco.edu/ded/sb/sb38.pdf). The Chancellor's Office currently includes 115 different tribal and cultural affiliations. This list is expected to be updated to include all federally recognized tribes and bands.
+
+Note: The application is asking for known ancestry, not enrollment status. Many cultural groups, including *Aztec*, *Cherokee*, *Chippewa*, *Navajo*, *Sioux*, and *Zapotec*, are not expanded out into their distinct tribes and bands.
+
+
+**UPDATE April 03, 2024**: 
+
+The American Indian and Alaska Native data elements have been expanded. 
+
+https://cccnext.jira.com/wiki/spaces/PD/pages/3390799873/2024+AIAN+Expansion+Enhancement+in+CCCApply

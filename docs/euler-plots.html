@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>4 Euler Plots | The Missing Many</title>
+<meta name="author" content="Jes LaCourse">
+<meta name="description" content="Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We’re limiting our groups today...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="4 Euler Plots | The Missing Many">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We’re limiting our groups today...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Euler Plots | The Missing Many">
+<meta name="twitter:description" content="Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We’re limiting our groups today...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="libs/sass8aa4e77b409a60740fd9f484cca4bf77/_variables.min.css">
+<link rel="stylesheet" href="libs/sassf497f41fa81c24a0a4b9951f45b9aaec/style.min.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Missing Many</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">The Missing Many</a></li>
+<li><a class="" href="definitions.html"><span class="header-section-number">1</span> Definitions</a></li>
+<li><a class="" href="sample-data.html"><span class="header-section-number">2</span> Sample Data</a></li>
+<li><a class="" href="building-derived-elements-sql.html"><span class="header-section-number">3</span> Building Derived Elements [SQL]</a></li>
+<li><a class="active" href="euler-plots.html"><span class="header-section-number">4</span> Euler Plots</a></li>
+<li><a class="" href="upset-plots.html"><span class="header-section-number">5</span> UpSet Plots</a></li>
+<li><a class="" href="style-guide.html"><span class="header-section-number">6</span> Style Guide</a></li>
+</ul>
+
+        <div class="book-extra">
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="euler-plots" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Euler Plots<a class="anchor" aria-label="anchor" href="#euler-plots"><i class="fas fa-link"></i></a>
+</h1>
+<blockquote>
+<p>Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We’re limiting our groups today to eight ancestries with all students sharing some AI/AN ancestry. While errors increase with the number of combinations, there is valuable high-level insight to the more complex figures. You’ll notice the notable stubbornness in the examples below of the plots’ refusal to visualize students with combined Black &amp; Hispanic ancestry. Our recommendation is to use Euler plots to explore data, whereas UpSet plots may be a better tool for sharing out information.</p>
+</blockquote>
+<p>Euler Plots require the package <code>eulerr</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Area proportional Euler diagrams </span></span>
+<span><span class="co">#install.packages("eulerr")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jolars/eulerr">eulerr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Please see the package documentation for introductory examples and reference manuals:</p>
+<p><a href="https://cran.r-project.org/web/packages/eulerr/index.html">https://cran.r-project.org/web/packages/eulerr/index.html</a></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2271</span><span class="op">)</span></span></code></pre></div>
+<p>We’ll use only the derived <code>any</code> data elements for the Euler plots.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a reduced size data frame with just the `any` elements in it, cols 9-15. </span></span>
+<span><span class="va">anyAIAN</span> <span class="op">&lt;-</span> <span class="va">students</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">15</span><span class="op">]</span> </span>
+<span></span>
+<span><span class="co"># Show the first three rows</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anyAIAN</span>, <span class="fl">3</span><span class="op">)</span> </span></code></pre></div>
+<pre><code>##   anyAABlack anyAIAN anyAsian anyFilipino anyHispLat anyPI anyMENA anyWhite
+## 1          0       1        0           0          0     0       0        1
+## 2          0       1        0           0          0     0       0        1
+## 3          0       1        0           0          1     0       0        0</code></pre>
+<p>The first example I’ll share details the overlap between White and Hispanic ancestries among Native students.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Build a plot showing the overlap between: </span></span>
+<span><span class="co"># Native students (col 2) with any HispLat (col 5) or White (col 8) ancestry </span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://jolars.github.io/eulerr/reference/euler.html">euler</a></span><span class="op">(</span><span class="va">anyAIAN</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span>, shape <span class="op">=</span> <span class="st">"ellipse"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Font size: 100% </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">v</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"Multiracial Native Students"</span>,       <span class="co"># Plot Title </span></span>
+<span>     cex.main <span class="op">=</span> <span class="fl">1.5</span>,                             <span class="co"># Title size (150% of body text)</span></span>
+<span>     quantities <span class="op">=</span> <span class="cn">TRUE</span>,                          <span class="co"># Show how many are in each group</span></span>
+<span>     fills <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="st">"#ECECEC"</span>, <span class="st">"#F7D988"</span>, <span class="st">"#FFFFFF"</span><span class="op">)</span>,<span class="co"># Use custom group colors </span></span>
+<span>     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AI/AN"</span>, <span class="st">"Hispanic"</span>, <span class="st">"White"</span><span class="op">)</span>,   <span class="co"># Labels; in order of group above</span></span>
+<span>     legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>               <span class="co"># Legend position, if any</span></span>
+<span>     <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/eulerHispWhite-1.png" width="672"></div>
+<p>In the plot above, we limited our dataframe to three columns using bracket notation, <code>anyAIAN[c(2,5,8)]</code>. This format is asking for the second, fifth, and eighth columns from our dataframe called <code>anyAIAN</code>. In the example below, we can call the same function without limiting the columns, <code>euler(anyAIAN)</code>.</p>
+<div class="alert alert-dismissible alert-warning">
+<p><button type="button" class="close" data-dismiss="alert">×</button>
+<strong>Heads up!</strong> Increasing the number of variables will lead to errors and missing data. Be sure to match the sum of the combinations shown with your total headcount.</p>
+</div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Want to throw the whole kitchen sink at it? </span></span>
+<span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://jolars.github.io/eulerr/reference/euler.html">euler</a></span><span class="op">(</span><span class="va">anyAIAN</span>, shape <span class="op">=</span> <span class="st">"ellipse"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Font size: 100% </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">v</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"Multiracial Native Students"</span>,       <span class="co"># Plot Title </span></span>
+<span>     cex.main <span class="op">=</span> <span class="fl">1.5</span>,                             <span class="co"># Title size (150% of body text)</span></span>
+<span>     quantities <span class="op">=</span> <span class="cn">TRUE</span>,                          <span class="co"># Show how many are in each group</span></span>
+<span>     fills <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#AF2424"</span>,<span class="st">"#ECECEC"</span>, <span class="st">"#6194A8"</span>,  <span class="co"># Eight colors for eight groups</span></span>
+<span>               <span class="st">"#9952A3"</span>,<span class="st">"#F7D988"</span>, <span class="st">"#94b9A9"</span>,</span>
+<span>               <span class="st">"#C2D5A6"</span>,<span class="st">"#FFFFFF"</span> <span class="op">)</span>,</span>
+<span>     <span class="co">#labels,                                    # Omitting labels for complex plots</span></span>
+<span>     legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>               <span class="co"># Legend position, if any</span></span>
+<span>     <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/eulerKitchSink-1.png" width="672"></div>
+<div id="diagnostics-for-euler-plots" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Diagnostics for Euler Plots<a class="anchor" aria-label="anchor" href="#diagnostics-for-euler-plots"><i class="fas fa-link"></i></a>
+</h2>
+<blockquote>
+<p>With three or more sets intersecting, exact Euler diagrams are often impossible. For such cases eulerr attempts to provide a good approximation by numerically tuning the parameters of the ellipses or circles to minimize the error in the resulting diagram.</p>
+</blockquote>
+<p>We’ve increased the possible number of combinations, 7 for three elements (<span class="math inline">\(2^3 -1\)</span>), in the first plot to 255 combinations for 8 elements (<span class="math inline">\(2^8-1\)</span>). That said, not all combinations are used. Notably, with all students sharing AI/AN ancestry we won’t have any other single ancestry groups (i.e. only AA/Black, only Asian, and so on). With the given data design, MENA will always be nested with White as well.</p>
+<p>To show the combinations, we can call different elements in the list we built in the euler plot, <code>v</code>. The element <code>original.values</code> is a list of the true combinations.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Show me the combinations of students I have in this dataset. </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span></span>
+<span>  <span class="va">v</span><span class="op">$</span><span class="va">original.values</span><span class="op">[</span><span class="va">v</span><span class="op">$</span><span class="va">original.values</span> <span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>,     <span class="co"># Show groups with at least one student</span></span>
+<span>  <span class="fl">10</span><span class="op">)</span>                                          <span class="co"># Only the first 10 in the list</span></span></code></pre></div>
+<pre><code>##                       anyAIAN            anyAABlack&amp;anyAIAN 
+##                            92                            18 
+##              anyAIAN&amp;anyAsian           anyAIAN&amp;anyFilipino 
+##                             3                             2 
+##            anyAIAN&amp;anyHispLat                 anyAIAN&amp;anyPI 
+##                           120                             4 
+##              anyAIAN&amp;anyWhite anyAABlack&amp;anyAIAN&amp;anyHispLat 
+##                           234                            10 
+##      anyAABlack&amp;anyAIAN&amp;anyPI   anyAABlack&amp;anyAIAN&amp;anyWhite 
+##                             1                            32</code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># How many combinations am I visualizing? </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span><span class="op">(</span> <span class="va">v</span><span class="op">[</span><span class="va">v</span><span class="op">$</span><span class="va">original.values</span> <span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 35</code></pre>
+<p>List element <code>fitted.values</code> are the number of values plotted. Fitted values may not be integers, but rather the area allocated within the ellipse for a given group. That said, if a fitted value is zero but the original value is not, that whole group will be missing entirely. Let’s find those groups.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># So who is missing? </span></span>
+<span><span class="co"># Create a subset of missing students </span></span>
+<span><span class="va">missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span></span>
+<span>    <span class="va">v</span><span class="op">$</span><span class="va">original.values</span>,       <span class="co"># Show the group-counts of students</span></span>
+<span>      <span class="va">v</span><span class="op">$</span><span class="va">fitted.values</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="co"># Who are completely missing</span></span>
+<span>      <span class="va">v</span><span class="op">$</span><span class="va">original.values</span> <span class="op">&gt;</span><span class="fl">0</span>   <span class="co"># Yet should be represented </span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Count up all our missing students</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">missing</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 37</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># What groups are completely omitted on the plot</span></span>
+<span><span class="va">missing</span></span></code></pre></div>
+<pre><code>##                                         anyAIAN&amp;anyFilipino 
+##                                                           2 
+##                               anyAABlack&amp;anyAIAN&amp;anyHispLat 
+##                                                          10 
+##                                    anyAABlack&amp;anyAIAN&amp;anyPI 
+##                                                           1 
+##                                anyAIAN&amp;anyAsian&amp;anyFilipino 
+##                                                           1 
+##                                anyAIAN&amp;anyFilipino&amp;anyWhite 
+##                                                           3 
+##                                    anyAIAN&amp;anyHispLat&amp;anyPI 
+##                                                           2 
+##                                      anyAIAN&amp;anyPI&amp;anyWhite 
+##                                                           5 
+##                           anyAABlack&amp;anyAIAN&amp;anyPI&amp;anyWhite 
+##                                                           2 
+##                       anyAIAN&amp;anyAsian&amp;anyFilipino&amp;anyWhite 
+##                                                           2 
+##                           anyAIAN&amp;anyAsian&amp;anyMENA&amp;anyWhite 
+##                                                           2 
+##                           anyAIAN&amp;anyHispLat&amp;anyPI&amp;anyWhite 
+##                                                           2 
+##                anyAABlack&amp;anyAIAN&amp;anyHispLat&amp;anyPI&amp;anyWhite 
+##                                                           2 
+##                  anyAIAN&amp;anyAsian&amp;anyHispLat&amp;anyPI&amp;anyWhite 
+##                                                           1 
+## anyAABlack&amp;anyAIAN&amp;anyAsian&amp;anyFilipino&amp;anyHispLat&amp;anyWhite 
+##                                                           1 
+##      anyAIAN&amp;anyAsian&amp;anyFilipino&amp;anyHispLat&amp;anyPI&amp;anyWhite 
+##                                                           1</code></pre>
+<p>Ten students with combined AI/AN, Black, and Hispanic backgrounds are omitted from the visual. Five with AI/AN, Pacific Islander, and White combined ancestries are also missing. Several other groups, notably a handful including Filipino ancestry, are missing as well.</p>
+<p>Dot charts are a quick way to visualize missing values.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Show how many students are missing from each group, use resid() for orig minus fitted.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/dotchart.html">dotchart</a></span><span class="op">(</span><span class="va">missing</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">missing</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/eulerDiags3-1.png" width="672"></div>
+<p><strong>A note on built-in residuals</strong></p>
+<p>Fitted values are interesting. By design, the ellipses will have areas of over and underestimation. Underestimations are arguably more valuable to us in this context as these are student groups missing from the visual.</p>
+<p>To find underestimations, or missingness, we’re essentially pulling the residuals for groups we know have more than one student. Residuals are the difference between the original or true value for a combination and the fitted value. Overestimation happens when there are more fitted values than true. The best example of this are the overlap sections outside of the <code>anyAIAN</code> plot area, best seen with the tip of the <code>anyAABlack</code> ellipse. There are residuals built into <code>euler</code> that can be accessed using function <code><a href="https://rdrr.io/r/stats/residuals.html">resid()</a></code>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># What is the overall residual (over &amp; underestimation)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 34.14297</code></pre>
+<div id="options-to-improve-euler-plotting" class="section level4" number="4.1.0.1">
+<h4>
+<span class="header-section-number">4.1.0.1</span> Options to Improve Euler Plotting<a class="anchor" aria-label="anchor" href="#options-to-improve-euler-plotting"><i class="fas fa-link"></i></a>
+</h4>
+<p>Combining ancestries can help maintain the same level of storytelling without omitting students. For example, combining Filipino, Asian, and Pacific Islander along with re-combination of MENA with White will reduce the complexity to about an eighth of the original; 31 (<span class="math inline">\(2^5 -1\)</span>) combinations versus 255 (<span class="math inline">\(2^8 -1\)</span>).That said, be sure to share the disaggregated values as well.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a new column combining Asian and Filipino, tidyverse it</span></span>
+<span><span class="co"># The MENA, White combo is already baked in. All MENA are also tagged White for now.</span></span>
+<span><span class="va">anyCombined</span> <span class="op">&lt;-</span> <span class="va">anyAIAN</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>anyAsianFilipinoPI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">anyAsian</span><span class="op">|</span><span class="va">anyFilipino</span><span class="op">|</span><span class="va">anyPI</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># Asian, Filipino, combo</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">anyAsian</span>, <span class="op">-</span><span class="va">anyFilipino</span>,<span class="op">-</span><span class="va">anyPI</span>, <span class="op">-</span><span class="va">anyMENA</span><span class="op">)</span>                         <span class="co"># Drop combined columns to avoid dups</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># A little simpler, still not simple.</span></span>
+<span><span class="co"># You'll notice this runs quite a bit quicker, too. </span></span>
+<span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://jolars.github.io/eulerr/reference/euler.html">euler</a></span><span class="op">(</span><span class="va">anyCombined</span>, shape <span class="op">=</span> <span class="st">"ellipse"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># Font size: 100% </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">v</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"Multiracial Native Students"</span>,       <span class="co"># Plot Title </span></span>
+<span>     cex.main <span class="op">=</span> <span class="fl">1.5</span>,                             <span class="co"># Title size (150% of body text)</span></span>
+<span>     quantities <span class="op">=</span> <span class="cn">TRUE</span>,                          <span class="co"># Show how many are in each group</span></span>
+<span>     fills <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#AF2424"</span>,<span class="st">"#ECECEC"</span>,<span class="st">"#F7D988"</span>,    <span class="co"># Six colors for six groups</span></span>
+<span>               <span class="st">"#FFFFFF"</span>,<span class="st">"#6194A8"</span> <span class="op">)</span>,</span>
+<span>     <span class="co">#labels,                                    # Omitting labels for complex plots</span></span>
+<span>     legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>               <span class="co"># Legend position, if any</span></span>
+<span>     <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check diagnostics</span></span>
+<span><span class="co"># Let's check for missing students again</span></span>
+<span><span class="va">missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span></span>
+<span>    <span class="va">v</span><span class="op">$</span><span class="va">original.values</span>,       <span class="co"># Show the group-counts of students</span></span>
+<span>      <span class="va">v</span><span class="op">$</span><span class="va">fitted.values</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="co"># Who are completely missing</span></span>
+<span>      <span class="va">v</span><span class="op">$</span><span class="va">original.values</span> <span class="op">&gt;</span><span class="fl">0</span>   <span class="co"># Yet should be represented </span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># How many students didn't get plotted?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">missing</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Who is missing</span></span>
+<span><span class="va">missing</span> </span></code></pre></div>
+<pre><code>##         anyAABlack&amp;anyAIAN&amp;anyHispLat anyAABlack&amp;anyAIAN&amp;anyAsianFilipinoPI 
+##                                    10                                     1</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot them</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/dotchart.html">dotchart</a></span><span class="op">(</span><span class="va">missing</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">missing</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="building-derived-elements-sql.html"><span class="header-section-number">3</span> Building Derived Elements [SQL]</a></div>
+<div class="next"><a href="upset-plots.html"><span class="header-section-number">5</span> UpSet Plots</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#euler-plots"><span class="header-section-number">4</span> Euler Plots</a></li>
+<li><a class="nav-link" href="#diagnostics-for-euler-plots"><span class="header-section-number">4.1</span> Diagnostics for Euler Plots</a></li>
+</ul>
+
+      <div class="book-extra">
+      </div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Missing Many</strong>" was written by Jes LaCourse. It was last built on 2024-04-03.</p>
+  </div>
+
+
+</div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

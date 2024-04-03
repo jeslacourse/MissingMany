@@ -1,0 +1,23 @@
+--- 
+title: "The Missing Many"
+author: "Jes LaCourse"
+date: "`r Sys.Date()`"
+output_dir: "docs"
+site: bookdown::bookdown_site
+documentclass: book
+description: "Decoding MIS Categories to Highlight the Systemic Masking of Native Students"
+---
+
+# The Missing Many {-}
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen = 3)
+```
+
+
+Sierra College reported more than six times as many American Indian and Alaska Native (AI/AN) students excluded from Fall 2023 MIS reporting than those included. Of 709 students with AI/AN ancestry, only 94 were reported to MIS as AI/AN. 
+
+AI/AN students who reported any Hispanic/Latinx or multiracial ancestry on their CCC application are not included in state and federal reporting as AI/AN students. That said, it's critical that institutions include these students into on-site analytics and demographics, even if these students are not identified at a state or federal level. 
+

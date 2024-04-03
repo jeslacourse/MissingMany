@@ -1,0 +1,185 @@
+# Euler Plots
+
+> Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We're limiting our groups today to eight ancestries with all students sharing some AI/AN ancestry. While errors increase with the number of combinations, there is valuable high-level insight to the more complex figures. You'll notice the notable stubbornness in the examples below of the plots' refusal to visualize students with combined Black & Hispanic ancestry. Our recommendation is to use Euler plots to explore data, whereas UpSet plots may be a better tool for sharing out information. 
+
+
+Euler Plots require the package `eulerr`. 
+
+```{r}
+# Area proportional Euler diagrams 
+#install.packages("eulerr")
+library(eulerr)
+```
+
+Please see the package documentation for introductory examples and reference manuals: 
+
+[https://cran.r-project.org/web/packages/eulerr/index.html](https://cran.r-project.org/web/packages/eulerr/index.html)
+
+```{r}
+set.seed(2271)
+```
+
+We'll use only the derived `any` data elements for the Euler plots. 
+
+```{r}
+# Create a reduced size data frame with just the `any` elements in it, cols 9-15. 
+anyAIAN <- students[8:15] 
+
+# Show the first three rows
+head(anyAIAN, 3) 
+```
+
+The first example I'll share details the overlap between White and Hispanic ancestries among Native students. 
+
+```{r eulerHispWhite}
+# Build a plot showing the overlap between: 
+# Native students (col 2) with any HispLat (col 5) or White (col 8) ancestry 
+v <- euler(anyAIAN[c(2,5,8)], shape = "ellipse")
+par(cex = 1) # Font size: 100% 
+plot(v, 
+     main = "Multiracial Native Students",       # Plot Title 
+     cex.main = 1.5,                             # Title size (150% of body text)
+     quantities = TRUE,                          # Show how many are in each group
+     fills = c( "#ECECEC", "#F7D988", "#FFFFFF"),# Use custom group colors 
+     labels = c("AI/AN", "Hispanic", "White"),   # Labels; in order of group above
+     legend = list(side = "right")               # Legend position, if any
+     )
+```
+
+In the plot above, we limited our dataframe to three columns using bracket notation, `anyAIAN[c(2,5,8)]`. This format is asking for the second, fifth, and eighth columns from our dataframe called `anyAIAN`. In the example below, we can call the same function without limiting the columns, `euler(anyAIAN)`. 
+
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Heads up!</strong> Increasing the number of variables will lead to errors and missing data. Be sure to match the sum of the combinations shown with your total headcount. 
+</div>
+
+```{r eulerKitchSink}
+# Want to throw the whole kitchen sink at it? 
+
+v <- euler(anyAIAN, shape = "ellipse")
+par(cex = 1) # Font size: 100% 
+plot(v, 
+     main = "Multiracial Native Students",       # Plot Title 
+     cex.main = 1.5,                             # Title size (150% of body text)
+     quantities = TRUE,                          # Show how many are in each group
+     fills = c("#AF2424","#ECECEC", "#6194A8",  # Eight colors for eight groups
+               "#9952A3","#F7D988", "#94b9A9",
+               "#C2D5A6","#FFFFFF" ),
+     #labels,                                    # Omitting labels for complex plots
+     legend = list(side = "right")               # Legend position, if any
+     )
+
+```
+
+## Diagnostics for Euler Plots
+
+> With three or more sets intersecting, exact Euler diagrams are often impossible. For such cases eulerr attempts to provide a good approximation by numerically tuning the parameters of the ellipses or circles to minimize the error in the resulting diagram.
+
+We've increased the possible number of combinations, 7 for three elements ($2^3 -1$), in the first plot to 255 combinations for 8 elements ($2^8-1$). That said, not all combinations are used. Notably, with all students sharing AI/AN ancestry we won't have any other single ancestry groups (i.e. only AA/Black, only Asian, and so on). With the given data design, MENA will always be nested with White as well. 
+
+To show the combinations, we can call different elements in the list we built in the euler plot, `v`. The element `original.values` is a list of the true combinations. 
+
+```{r eulerDiags}
+# Show me the combinations of students I have in this dataset. 
+head(
+  v$original.values[v$original.values >0],     # Show groups with at least one student
+  10)                                          # Only the first 10 in the list
+
+
+# How many combinations am I visualizing? 
+NROW( v[v$original.values >0])
+```
+List element `fitted.values` are the number of values plotted. Fitted values may not be integers, but rather the area allocated within the ellipse for a given group. That said, if a fitted value is zero but the original value is not, that whole group will be missing entirely. Let's find those groups. 
+
+```{r eulerDiags2}
+
+# So who is missing? 
+# Create a subset of missing students 
+missing <- subset(
+    v$original.values,       # Show the group-counts of students
+      v$fitted.values == 0 & # Who are completely missing
+      v$original.values >0   # Yet should be represented 
+)
+
+# Count up all our missing students
+sum(missing)
+
+# What groups are completely omitted on the plot
+missing
+
+```
+
+Ten students with combined AI/AN, Black, and Hispanic backgrounds are omitted from the visual. Five with AI/AN, Pacific Islander, and White combined ancestries are also missing. Several other groups, notably a handful including Filipino ancestry, are missing as well. 
+
+Dot charts are a quick way to visualize missing values. 
+
+```{r eulerDiags3}
+# Show how many students are missing from each group, use resid() for orig minus fitted.
+
+dotchart(missing[order(missing)])
+
+```
+
+
+**A note on built-in residuals**
+
+Fitted values are interesting. By design, the ellipses will have areas of over and underestimation. Underestimations are arguably more valuable to us in this context as these are student groups missing from the visual.  
+
+To find underestimations, or missingness, we're essentially pulling the residuals for groups we know have more than one student. Residuals are the difference between the original or true value for a combination and the fitted value. Overestimation happens when there are more fitted values than true. The best example of this are the overlap sections outside of the `anyAIAN` plot area, best seen with the tip of the `anyAABlack` ellipse. There are residuals built into `euler` that can be accessed using function `resid()`.
+
+```{r residCompare}
+# What is the overall residual (over & underestimation)
+sum(resid(v))
+```
+
+
+
+#### Options to Improve Euler Plotting
+
+Combining ancestries can help maintain the same level of storytelling without omitting students. For example, combining Filipino, Asian, and Pacific Islander along with re-combination of MENA with White will reduce the complexity to about an eighth of the original; 31 ($2^5 -1$) combinations versus 255 ($2^8 -1$).That said, be sure to share the disaggregated values as well. 
+
+```{r eulerCombine}
+# Create a new column combining Asian and Filipino, tidyverse it
+# The MENA, White combo is already baked in. All MENA are also tagged White for now.
+anyCombined <- anyAIAN %>% 
+  mutate(anyAsianFilipinoPI = ifelse(anyAsian|anyFilipino|anyPI, 1, 0)) %>% # Asian, Filipino, combo
+  select(-anyAsian, -anyFilipino,-anyPI, -anyMENA)                         # Drop combined columns to avoid dups
+```
+
+
+
+```{r}
+# A little simpler, still not simple.
+# You'll notice this runs quite a bit quicker, too. 
+v <- euler(anyCombined, shape = "ellipse")
+par(cex = 1) # Font size: 100% 
+plot(v, 
+     main = "Multiracial Native Students",       # Plot Title 
+     cex.main = 1.5,                             # Title size (150% of body text)
+     quantities = TRUE,                          # Show how many are in each group
+     fills = c("#AF2424","#ECECEC","#F7D988",    # Six colors for six groups
+               "#FFFFFF","#6194A8" ),
+     #labels,                                    # Omitting labels for complex plots
+     legend = list(side = "right")               # Legend position, if any
+     )
+```
+
+```{r}
+# Check diagnostics
+# Let's check for missing students again
+missing <- subset(
+    v$original.values,       # Show the group-counts of students
+      v$fitted.values == 0 & # Who are completely missing
+      v$original.values >0   # Yet should be represented 
+)
+
+# How many students didn't get plotted?
+sum(missing)
+
+# Who is missing
+missing 
+
+# Plot them
+dotchart(missing[order(missing)])
+
+```

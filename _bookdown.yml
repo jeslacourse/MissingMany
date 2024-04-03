@@ -1,0 +1,6 @@
+output_dir: "docs"
+book_filename: "MissingMany"
+language:
+  ui:
+    chapter_name: ""
+delete_merged_file: true

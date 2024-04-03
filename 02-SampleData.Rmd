@@ -1,0 +1,46 @@
+# Sample Data 
+
+We've pulled together sample data for 715 mock students with AI/AN ancestry. This is replicated data and these are not real student `CCCID`'s. A `CCCID` code is typically three letters followed by four numbers, like `ABC1234`. We've replaced these with mock IDs that use four letters, `ABCD123`, to avoid any unintentional overlap with true students.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse) # For data manipulation
+
+students <- read.csv("data/studentSample.csv")
+```
+
+This sample is made up of three components: data collected from CCCApply, data for MIS/IPEDS reporting, and derived elements. 
+
+## Application and Reporting Data
+
+**CCCApply Data** 
+
+```{r}
+# Grab only the CCCApply columns, first 3 rows
+head(
+  students[c(1,4:7)], 3
+)
+```
+
+
+**MIS/IPEDS Reporting**
+
+Next are institutional data elements for MIS/IPEDS reporting. These should be familiar, even if the column names are a little different: 
+
+```{r}
+# Preview only the MIS/IPEDS elements, first 3 rows
+head(
+  students[c(1:3)], 3
+)
+```
+
+## Derived Elements
+
+Last are 16 derived elements that identify student with `any` ancestry, multiracial `mult` ancestry, or `only` a given ancestry. The latter is reserved for Hispanic/Latinx students without any ancestries outside Latin America and Spain, `onlyHispLat`. This creates a comparison group for the traditional `Hispanic/Latinx` MIS/IPEDS group.  
+
+```{r}
+# Preview only the derived elements, first 3 rows 
+head(
+  students[c(1, 8:23)], 3
+)
+```
+

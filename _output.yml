@@ -1,0 +1,12 @@
+bookdown::bs4_book:
+  css: [_variables.scss, style.scss]
+  theme: 
+    bootswatch: paper
+    primary: "#222222"      # dark-gray  #rmdnote
+    secondary: "#F7D988"    # yellow         
+    success: "#6194A8"      # cyan       #rmdimportant
+    info: "#414771"         # purple     #rmdtip
+    warning: "#7D253A"      # burgundy     #rmdwarning
+    danger: "#AF2124"       # red        #rmdcaution
+    
+    

@@ -1,0 +1,124 @@
+@import "_variables";
+
+a {
+  color: $gray;
+}
+
+.center {
+  text-align: center;
+}
+
+
+
+/*
+ *  Recap Box
+ */
+ 
+.recap {
+  padding: 1em 1em 1em 2em;
+  margin-bottom: 10px;
+  border: 2px solid #dddddd;
+  border-radius: 10px;
+  background: #F6F6F6 5px center/3em no-repeat;
+  position:relative;
+  font-size: 0.75em;
+}
+
+/*
+ *  Notes and Exam Material
+ */
+
+// "Oh hey, this is exam-worthy" - Yellow Box 
+.testmaterial {
+  padding: 1em 1em 1em 1em;
+  margin-bottom: 10px;
+  border: 2px solid $brand-note; //yellow
+  border-radius: 3px;
+  background: #F6F6F6 5px center/3em no-repeat;
+  position: relative;
+}
+
+
+.tm-inline {
+  padding: 2px 2px 2px 2px;
+  margin-bottom: 10px;
+  border: 2px solid $brand-note; //yellow
+  
+  background: #F6F6F6 5px center/3em no-repeat;
+  position: relative;
+}
+
+/*
+ *   Callouts  
+ */
+
+// Pandoc has a parent class for examples, so these work a bit differntly
+.example {
+   padding: 20px;
+   margin: 20px 0;
+   background: #F6F6F6 5px center/3em no-repeat;
+
+}  
+ 
+.example:not([id^=exm]){ 
+border: 1px solid #eee;  
+  border-radius: 3px;
+   border-left-width: 6px !important;
+    border-left-color: $brand-example;
+    }
+ 
+.example span[id^=exm] {
+  padding:0px;
+  
+}
+ 
+.example2 {
+    @extend .example; 
+    border-left-color: $brand-example2 !important;
+}
+
+
+// But our other callouts can just use the following formula
+@mixin ct { //callouts as a mixin
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 6px !important;
+    border-radius: 3px;
+    background: #F6F6F6 5px center/3em no-repeat;
+}    
+
+.note {
+    @include ct; 
+    border-left-color: $brand-note !important;
+}
+
+.defn{
+    @include ct; 
+    border-left-color: $brand-defn !important;
+}
+
+.danger{
+  @include ct; 
+  border-left-color: $brand-danger !important;
+}
+
+
+/*
+ *  Font Awesome - Callout Icons
+ */
+
+// Give icons some breathing room in callout flexboxes
+.fa {
+  padding-right: 15px;
+  font-size: 2em;
+  
+// In progress  
+}
+
+.fa-primary {
+  content: "fa-pen";
+  color: $brand-primary;
+}
+  
+

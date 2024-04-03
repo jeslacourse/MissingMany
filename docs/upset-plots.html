@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>5 UpSet Plots | The Missing Many</title>
+<meta name="author" content="Jes LaCourse">
+<meta name="description" content='UpSet plots require the package UpSetR. Please see the package documentation for introductory examples and reference manuals: https://CRAN.R-project.org/package=UpSetR #install.packages("UpSetR")...'>
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="5 UpSet Plots | The Missing Many">
+<meta property="og:type" content="book">
+<meta property="og:description" content='UpSet plots require the package UpSetR. Please see the package documentation for introductory examples and reference manuals: https://CRAN.R-project.org/package=UpSetR #install.packages("UpSetR")...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 UpSet Plots | The Missing Many">
+<meta name="twitter:description" content='UpSet plots require the package UpSetR. Please see the package documentation for introductory examples and reference manuals: https://CRAN.R-project.org/package=UpSetR #install.packages("UpSetR")...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="libs/sass8aa4e77b409a60740fd9f484cca4bf77/_variables.min.css">
+<link rel="stylesheet" href="libs/sassf497f41fa81c24a0a4b9951f45b9aaec/style.min.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Missing Many</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">The Missing Many</a></li>
+<li><a class="" href="definitions.html"><span class="header-section-number">1</span> Definitions</a></li>
+<li><a class="" href="sample-data.html"><span class="header-section-number">2</span> Sample Data</a></li>
+<li><a class="" href="building-derived-elements-sql.html"><span class="header-section-number">3</span> Building Derived Elements [SQL]</a></li>
+<li><a class="" href="euler-plots.html"><span class="header-section-number">4</span> Euler Plots</a></li>
+<li><a class="active" href="upset-plots.html"><span class="header-section-number">5</span> UpSet Plots</a></li>
+<li><a class="" href="style-guide.html"><span class="header-section-number">6</span> Style Guide</a></li>
+</ul>
+
+        <div class="book-extra">
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="upset-plots" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> UpSet Plots<a class="anchor" aria-label="anchor" href="#upset-plots"><i class="fas fa-link"></i></a>
+</h1>
+<p>UpSet plots require the package <code>UpSetR</code>.</p>
+<p>Please see the package documentation for introductory examples and reference manuals:</p>
+<p><a href="https://CRAN.R-project.org/package=UpSetR">https://CRAN.R-project.org/package=UpSetR</a></p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("UpSetR")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/hms-dbmi/UpSetR">UpSetR</a></span><span class="op">)</span></span></code></pre></div>
+<p>We’ll use only the derived <code>any</code> data elements for the UpSet plots. See the section on <em>Sample Data</em> for more details.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a reduced size data frame with just the `any` elements in it, cols 9-15. </span></span>
+<span><span class="va">anyAIAN</span> <span class="op">&lt;-</span> <span class="va">students</span><span class="op">[</span><span class="fl">8</span><span class="op">:</span><span class="fl">15</span><span class="op">]</span> </span>
+<span></span>
+<span><span class="co"># Show the first three rows</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">anyAIAN</span>, <span class="fl">3</span><span class="op">)</span> </span></code></pre></div>
+<pre><code>##   anyAABlack anyAIAN anyAsian anyFilipino anyHispLat anyPI anyMENA anyWhite
+## 1          0       1        0           0          0     0       0        1
+## 2          0       1        0           0          0     0       0        1
+## 3          0       1        0           0          1     0       0        0</code></pre>
+<p>UpSet plots can take a larger combination of sets and create detail rich displays. Below is a plot of all of our AI/AN students and their ancestral make-ups.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>                  <span class="co"># Set margin size. </span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html">upset</a></span><span class="op">(</span><span class="va">anyAIAN</span>,                            <span class="co"># Plot our AI/AN student df</span></span>
+<span>      sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"anyAIAN"</span>,<span class="st">"anyAABlack"</span>,    <span class="co"># UpSet requires us to create </span></span>
+<span>               <span class="st">"anyAsian"</span>, <span class="st">"anyFilipino"</span>, <span class="co">#   a list of combinations </span></span>
+<span>               <span class="st">"anyPI"</span>, <span class="st">"anyWhite"</span>,</span>
+<span>               <span class="st">"anyHispLat"</span><span class="op">)</span>, </span>
+<span>      nintersects <span class="op">=</span> <span class="fl">15</span>,                   <span class="co"># Show the n largest combinations</span></span>
+<span>      set_size.show <span class="op">=</span> <span class="cn">T</span>,                  <span class="co"># Show the counts (x-axis)</span></span>
+<span>      order.by <span class="op">=</span> <span class="st">"freq"</span>,                  <span class="co"># Order by most common</span></span>
+<span>      sets.x.label <span class="op">=</span> <span class="st">"Distinct Students"</span>, <span class="co"># Add titles </span></span>
+<span>      mainbar.y.label <span class="op">=</span> <span class="st">"Distinct Students"</span>, </span>
+<span>      text.scale <span class="op">=</span> </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">1.3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span><span class="op">)</span>       <span class="co"># Adjust text sizes for plot</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="MissingMany_files/figure-html/UpSet-1.png" width="672">
+The main bar plot details the number of student with a given combination or <code>intersection</code>. The dots below the main bar plot are the ancestry combinations. In this figure, the most common ancestry combination is White and AI/AN.</p>
+<p>Notice that every student represented in the plot has AI/AN ancestry. The smaller, horizontal bar plot to the left of each ancestry counts the number of students who share that ancestry. UpSet refers to these groupings as <code>sets</code> and the counts as <code>set frequencies</code>.</p>
+<p>With 715 total AI/AN students, 453 have some White ancestry, and 291 with some Hispanic/Latinx ancestry. After White and Hispanic ancestry there is a large drop to students that share some African American/Black, Asian, Filipino or Pacific Islander ancestry. But these small groups aren’t lost like they were in the Euler plots!</p>
+<p>The figure above is limited to the top 15 combination. There aren’t any tie-breaker rules if, like in our case, the 15th and 16th combination are the same size. To expand the figure out for all values, omit the <code>nintersects</code> variable in the <code><a href="https://rdrr.io/pkg/UpSetR/man/upset.html">upset()</a></code> function.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html">upset</a></span><span class="op">(</span><span class="va">anyAIAN</span>,                            <span class="co"># Plot our AI/AN student df</span></span>
+<span>      sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"anyAIAN"</span>,<span class="st">"anyAABlack"</span>,    <span class="co"># UpSet requires us to create </span></span>
+<span>               <span class="st">"anyAsian"</span>, <span class="st">"anyFilipino"</span>, <span class="co">#   a list of combinations </span></span>
+<span>               <span class="st">"anyPI"</span>, <span class="st">"anyWhite"</span>,</span>
+<span>               <span class="st">"anyHispLat"</span><span class="op">)</span>, </span>
+<span>      <span class="co">#nintersects = 15,                  # Omit n largest combo filter</span></span>
+<span>      set_size.show <span class="op">=</span> <span class="cn">T</span>,                  <span class="co"># Show the counts (x-axis)</span></span>
+<span>      order.by <span class="op">=</span> <span class="st">"freq"</span>,                  <span class="co"># Order by most common</span></span>
+<span>      sets.x.label <span class="op">=</span> <span class="st">"Distinct Students"</span>, <span class="co"># Add titles </span></span>
+<span>      mainbar.y.label <span class="op">=</span> <span class="st">"Distinct Students"</span>, </span>
+<span>      text.scale <span class="op">=</span> </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">1.3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span><span class="op">)</span>       <span class="co"># Adjust text sizes for plot</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/UpSet2-1.png" width="672"></div>
+<p>Queries are an interesting addition to UpSet plots. These can get complicated in a hurry, though. The vignette can be found here: <a href="https://cran.r-project.org/web/packages/UpSetR/vignettes/queries.html">Querying the Data</a></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html">upset</a></span><span class="op">(</span><span class="va">anyAIAN</span>,                            <span class="co"># Plot our AI/AN student df</span></span>
+<span>      sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"anyAIAN"</span>,<span class="st">"anyAABlack"</span>,    <span class="co"># UpSet requires us to create </span></span>
+<span>               <span class="st">"anyAsian"</span>, <span class="st">"anyFilipino"</span>, <span class="co">#   a list of combinations </span></span>
+<span>               <span class="st">"anyPI"</span>, <span class="st">"anyWhite"</span>,</span>
+<span>               <span class="st">"anyHispLat"</span><span class="op">)</span>, </span>
+<span>      set_size.show <span class="op">=</span> <span class="cn">T</span>,                   <span class="co"># Show the counts (x-axis)</span></span>
+<span>      order.by <span class="op">=</span> <span class="st">"freq"</span>,                   <span class="co"># Order by most common</span></span>
+<span>      cutoff <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>      sets.x.label <span class="op">=</span> <span class="st">"Distinct Students"</span>,  <span class="co"># Add titles </span></span>
+<span>      mainbar.y.label <span class="op">=</span> <span class="st">"Distinct Students"</span>, </span>
+<span>      text.scale <span class="op">=</span> </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">1.3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span><span class="op">)</span>,       <span class="co"># Adjust text sizes for plot</span></span>
+<span>      </span>
+<span>      <span class="co"># Query! Must be a list of lists. </span></span>
+<span>      queries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>query <span class="op">=</span> <span class="va">intersects</span>, <span class="co"># Highlight intersections</span></span>
+<span>                  params <span class="op">=</span> <span class="st">"anyAIAN"</span>,      <span class="co"># Showing our MIS AI/AN</span></span>
+<span>                  color <span class="op">=</span> <span class="st">"goldenrod"</span>,   </span>
+<span>                  active <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="MissingMany_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="euler-plots.html"><span class="header-section-number">4</span> Euler Plots</a></div>
+<div class="next"><a href="style-guide.html"><span class="header-section-number">6</span> Style Guide</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#upset-plots"><span class="header-section-number">5</span> UpSet Plots</a></li></ul>
+
+      <div class="book-extra">
+      </div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Missing Many</strong>" was written by Jes LaCourse. It was last built on 2024-04-03.</p>
+  </div>
+
+
+</div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
