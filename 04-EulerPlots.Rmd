@@ -1,7 +1,17 @@
 # Euler Plots
 
-> Euler plots are a great exploratory tool to visualize shared ancestries. Combinations increase exponentially, so care should be given when choosing a starting set. We're limiting our groups today to eight ancestries with all students sharing some AI/AN ancestry. While errors increase with the number of combinations, there is valuable high-level insight to the more complex figures. You'll notice the notable stubbornness in the examples below of the plots' refusal to visualize students with combined Black & Hispanic ancestry. Our recommendation is to use Euler plots to explore data, whereas UpSet plots may be a better tool for sharing out information. 
 
+:::: {.recap}
+::: {.center}
+
+**In Summary**
+:::
+
+Euler plots are an excellent exploratory tool for visualizing shared ancestries. Since combinations increase exponentially, it's essential to choose a starting set carefully. For today's purposes, we're limiting our groups to eight ancestries, with all students sharing some AI/AN ancestry. 
+
+While errors may increase with the number of combinations, there is valuable high-level insight to be gained from more complex figures. You'll notice in the examples below the notable stubbornness of the plots in visualizing students with combined Black & Hispanic ancestry. Our recommendation is to use Euler plots for exploring data, while UpSet plots may be a better tool for sharing information. 
+
+::::
 
 Euler Plots require the package `eulerr`. 
 
@@ -48,10 +58,7 @@ plot(v,
 
 In the plot above, we limited our dataframe to three columns using bracket notation, `anyAIAN[c(2,5,8)]`. This format is asking for the second, fifth, and eighth columns from our dataframe called `anyAIAN`. In the example below, we can call the same function without limiting the columns, `euler(anyAIAN)`. 
 
-<div class="alert alert-dismissible alert-warning">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Heads up!</strong> Increasing the number of variables will lead to errors and missing data. Be sure to match the sum of the combinations shown with your total headcount. 
-</div>
+[Heads up!]{class="badge badge-warning"} Increasing the number of variables will lead to errors and missing data. Be sure to match the sum of the combinations shown with your total headcount. 
 
 ```{r eulerKitchSink}
 # Want to throw the whole kitchen sink at it? 
@@ -73,9 +80,15 @@ plot(v,
 
 ## Diagnostics for Euler Plots
 
-> With three or more sets intersecting, exact Euler diagrams are often impossible. For such cases eulerr attempts to provide a good approximation by numerically tuning the parameters of the ellipses or circles to minimize the error in the resulting diagram.
 
-We've increased the possible number of combinations, 7 for three elements ($2^3 -1$), in the first plot to 255 combinations for 8 elements ($2^8-1$). That said, not all combinations are used. Notably, with all students sharing AI/AN ancestry we won't have any other single ancestry groups (i.e. only AA/Black, only Asian, and so on). With the given data design, MENA will always be nested with White as well. 
+::: {.danger .d-flex .align-items-center}
+:::{.fa .fa-solid .fa-circle-exclamation .fa-2x .text-danger }
+:::
+With three or more sets intersecting, exact Euler diagrams are often impossible. For such cases `eulerr` attempts to provide a good approximation by numerically tuning the parameters of the ellipses or circles to minimize the error in the resulting diagram.
+:::
+
+We've increased the possible number of combinations from 7 for three elements ($2^3 -1$) in the first plot to 255 combinations for 8 elements ($2^8-1$). That said, not all combinations are utilized. Particularly, with all students sharing AI/AN ancestry we won't have any other single, standalone ancestry groups (i.e. only AA/Black, only Asian, and so on). With the given data design, MENA will always be nested with White students as an exclusive subgroup as well. 
+
 
 To show the combinations, we can call different elements in the list we built in the euler plot, `v`. The element `original.values` is a list of the true combinations. 
 

@@ -17,7 +17,22 @@ options(scipen = 3)
 ```
 
 
-Sierra College reported more than six times as many American Indian and Alaska Native (AI/AN) students excluded from Fall 2023 MIS reporting than those included. Of 709 students with AI/AN ancestry, only 94 were reported to MIS as AI/AN. 
+:::: {.recap}
+::: {.center}
 
-AI/AN students who reported any Hispanic/Latinx or multiracial ancestry on their CCC application are not included in state and federal reporting as AI/AN students. That said, it's critical that institutions include these students into on-site analytics and demographics, even if these students are not identified at a state or federal level. 
+**In Summary**
+:::
+
+Sierra College reported more than six times as many American Indian and Alaska Native (AI/AN) students excluded from Fall 2023 MIS reporting than those included. Of the 709 students with AI/AN ancestry, only 94 were reported to MIS as AI/AN.
+
+American Indian and Alaska Native students who reported any Hispanic/Latinx or multiracial ancestry on their CCC application are not included in state and federal reporting as AI/AN students. That said, it’s critical that institutions include these students in on-site analytics and demographics, even if these students are not identified at a state or federal level.
+
+::::
+
+This is a supplemental document to *The Missing Many: Decoding MIS Categories to Highlight the Systemic Masking of Native Students*, as presented to RP Conference, 2024. 
+
+The following sections will provide a high-level overview of race and ethnicity data elements and methodologies. We will discuss data from the Chancellor's Office, including CCCApply and MIS data formats. A data sample of AI/AN, multiracial AI/AN, and Hispanic AI/AN students will be provided to allow participants to try out some of the techniques on their own. Set analysis, including Euler and UpSet plotting, will be applied and shared as well.
+ 
+
+
 

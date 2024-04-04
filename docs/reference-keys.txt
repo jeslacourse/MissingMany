@@ -1,7 +1,3 @@
-eq:yint
-exm:unlabeled-div-1
-exm:unlabeled-div-2
-def:unlabeled-div-3
 definitions
 ccc-apply
 data-elements
@@ -10,13 +6,11 @@ expanded-definitions
 sample-data
 application-and-reporting-data
 derived-elements
-building-derived-elements-sql
+data-structures
+building-an-expanded-raceethnicity-table
+derived-elements-1
+unpivoted-data-for-brilliant-filtering
 euler-plots
 diagnostics-for-euler-plots
 options-to-improve-euler-plotting
 upset-plots
-style-guide
-general-content
-examples
-definitions-1
-dangers

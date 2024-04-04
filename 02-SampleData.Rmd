@@ -2,13 +2,15 @@
 
 We've pulled together sample data for 715 mock students with AI/AN ancestry. This is replicated data and these are not real student `CCCID`'s. A `CCCID` code is typically three letters followed by four numbers, like `ABC1234`. We've replaced these with mock IDs that use four letters, `ABCD123`, to avoid any unintentional overlap with true students.
 
+The sample data can be found here: [data/studentSample.csv](https://github.com/jeslacourse/MissingMany/blob/main/data/studentSample.csv)
+
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse) # For data manipulation
 
 students <- read.csv("data/studentSample.csv")
 ```
 
-This sample is made up of three components: data collected from CCCApply, data for MIS/IPEDS reporting, and derived elements. 
+This sample is made up of three components: Data collected from CCCApply, data for MIS/IPEDS reporting, and derived elements. 
 
 ## Application and Reporting Data
 

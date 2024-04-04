@@ -1,6 +1,56 @@
-# Building Derived Elements [SQL]
+# Data Structures
+
+## Building An Expanded Race/Ethnicity Table
+
+
+```
+/*
+ * Initial build, bring in CCCApply and MIS data elements, 
+ * create placeholders for expanded elements.  
+ */
+ 
+SELECT DISTINCT 
+  CCCID, 
+  ETHNIC_CODE,
+	ETHNIC_DESC, 
+
+	RACE_ETHNICITY, 
+ 	HISPANIC,
+ 	RACE_ETHNIC_FULL, 
+ 	RACE_GROUP,
+
+	CAST(NULL AS VARCHAR(1)) AS anyAABlack, 
+	CAST(NULL AS VARCHAR(1)) AS anyAIAN, 
+	CAST(NULL AS VARCHAR(1)) AS anyAsian, 
+	CAST(NULL AS VARCHAR(1)) AS anyFilipino, 
+	CAST(NULL AS VARCHAR(1)) AS anyHispLat, 
+	CAST(NULL AS VARCHAR(1)) AS anyPI, 
+	CAST(NULL AS VARCHAR(1)) AS anyMENA,
+	CAST(NULL AS VARCHAR(1)) AS anyWhite, 
+
+	CAST(NULL AS VARCHAR(1)) AS multAABlack, 
+	CAST(NULL AS VARCHAR(1)) AS multAIAN, 
+	CAST(NULL AS VARCHAR(1)) AS multAsian, 
+	CAST(NULL AS VARCHAR(1)) AS multFilipino, 
+	CAST(NULL AS VARCHAR(1)) AS multPI, 
+	CAST(NULL AS VARCHAR(1)) AS multMENA,
+	CAST(NULL AS VARCHAR(1)) AS multWhite, 
+	
+	CAST(NULL AS VARCHAR(1)) AS onlyHispLat 
+
+INTO ETHNICITY_TABLE
+FROM SOURCE_TABLE;  
+```
+
+
+### Derived Elements 
 
 The derived elements are build in SQL using a series of case statements. 
+
+Each statement checks both the MIS/IPEDS `ETHNIC_CODE` and the 21-code `RACE_ETHNICITY` for the given criteria. The full coding can be found here: [data/ETHNICITY_TsABLE-UPDATE.txt](https://github.com/jeslacourse/MissingMany/blob/main/data/ETHNICITY_TABLE-UPDATE.txt)
+
+
+`any` codes are looking for *any* shared ancestry with the parent group. In the sample below, we have students with any African American or Black ancestry. We first check for MIS `ETHNIC_CODE = 1`, our primary indicator for African American and Black students, then look for a `Y` indicator in the 15th spot of the SB29 code, `RACE_ETHNICITY`.   
 
 ```
 anyAABlack = 
@@ -11,4 +61,45 @@ anyAABlack =
 		   END
 ```
 
-Each statement checks both the MIS/IPEDS `ETHNIC_CODE` and the 21-code `RACE_ETHNICITY` for the given criteria. The full coding can be found here: [SQL Coding - ETHNICITY TABLE]
+`mult` codes are a classification that indicates if a student is Hispanic or Multiracial and has shared ancestry with the parent group. While the two values are currently combined, it's our intent to break these out into separate groups. Our criteria is similar to the `any` groups: We first check for MIS `ETHNIC_CODE`s `5` or `7`, Hispanic or Multiracial *and* a `Y` indicator in the 15th spot of the SB29 code, `RACE_ETHNICITY`.  
+
+```
+multAABlack = CASE WHEN 
+		(ETHNIC_CODE in ('5','7') --PRIMARY
+		AND SUBSTRING(RACE_ETHNICITY,15,1) LIKE '%Y%') THEN 1 
+		ELSE 0
+		END
+```
+
+We have one case called `only`, `onlyHispLat`. Given the multiracial nature of the Hispanic/Latinx MIS category, we wanted a comparison group to identify our Hispanic and Latinx students with solely Latin American and Spanish ancestry. This helped to create a balance similar to other ancestries. 
+
+```
+onlyHispLat =  CASE WHEN 
+		SUBSTRING(RACE_ETHNICITY, 1,5) like '%Y%' 
+			AND SUBSTRING(RACE_ETHNICITY, 6,21) NOT LIKE '%Y%' THEN 1 
+		ELSE 0
+		END
+```
+
+
+## Unpivoted Data for Brilliant Filtering
+
+See the SQL code here:  [data/PivotDemographics.txt](https://github.com/jeslacourse/MissingMany/blob/main/data/PivotDemographics.txt)
+
+Unpivot functions turn wide data into long data. With the student sample dataset, each student has one line. Unpivoted datasets combine the information into a three column structure: `CCCID`, `Demographic`, and `Attributes`. Every student will have one line for every demographic marker. 
+
+
+| **CCCID** | **Demogs**    | **Attributes**                        |
+|-----------|---------------|---------------------------------------|
+| AAAB123   | RaceEthnicity | Multiple Ethnicity                    |
+| AAAB123   | anyMENA       | Not MENA                              |
+| AAAB123   | onlyHispLat   | Not Only Hisp/Lat                     |
+| AAAB123   | multAABlack   | M/H African American/Black            |
+| AAAB123   | multAsian     | Not M/H Asian                         |
+| AAAB123   | multAIAN      | Not M/H American Indian/Alaska Native |
+| AAAB123   | multFilipino  | Not M/H Filipino                      |
+| AAAB123   | multPI        | Not M/H Pacific Islander              |
+| AAAB123   | multWhite     | M/H White                             |
+
+
+Our office has found this structure particularly valuable for dashboard filters. The ability to multi-select `Attributes` *Multiple Ethnicity* and *M/H African American/Black*, for example, would require two filters (or slicers in PowerBI) in order to narrow the list down to the same number of students. This list can be expanded for any and all demographic markers, but be aware of how quickly the dataset will grow. The math is straightforward: take the number of students in your dataset and multiply them by the number of demographics you want to filter by. For example, 1,000 students with 9 markers will require 9,000 lines. With 20 markers, they'll need 20,000 lines.
