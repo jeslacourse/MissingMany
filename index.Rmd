@@ -18,16 +18,16 @@ options(scipen = 3)
 
 
 :::: {.recap}
-::: {.center}
+**With NASSSP programs rolling out across the state, our goal is to empower colleges to acknowledge and understand that their American Indian and Alaska Native student population extends beyond reporting standards.**
 
-**In Summary**
-:::
 
-Sierra College reported more than six times as many American Indian and Alaska Native (AI/AN) students excluded from Fall 2023 MIS reporting than those included. Of the 709 students with AI/AN ancestry, only 94 were reported to MIS as AI/AN.
+In Fall 2023, only about one in seven of Sierra College's American Indian and Alaska Native (AI/AN) met the AI/AN requirements for MIS reporting. Of the 709 students with AI/AN ancestry, 94 were reported to MIS as AI/AN.
 
 American Indian and Alaska Native students who reported any Hispanic/Latinx or multiracial ancestry on their CCC application are not included in state and federal reporting as AI/AN students. That said, it’s critical that institutions include these students in on-site analytics and demographics, even if these students are not identified at a state or federal level.
 
 ::::
+
+[_Learn More About the Native American Student Support and Success Program (NASSSP)](https://www.cccco.edu/-/media/CCCCO-Website/docs/memo/ess-23-12-system-wide-memo-nasssp-a11y.pdf)
 
 This is a supplemental document to *The Missing Many: Decoding MIS Categories to Highlight the Systemic Masking of Native Students*, as presented to RP Conference, 2024. 
 
